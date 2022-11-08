@@ -8,7 +8,10 @@ use tokio::time::sleep;
 async fn cargo_shuttle_run(working_directory: &str) -> u16 {
     let working_directory = canonicalize(working_directory).unwrap();
     let port = pick_unused_port().unwrap();
-    let run_args = RunArgs { port };
+    let run_args = RunArgs {
+        port,
+        ..Default::default()
+    };
 
     let runner = Shuttle::new().unwrap().run(Args {
         api_url: Some("http://shuttle.invalid:80".to_string()),

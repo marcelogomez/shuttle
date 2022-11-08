@@ -310,7 +310,10 @@ impl Shuttle {
         let loader = Loader::from_so_file(so_path)?;
 
         let mut factory = LocalFactory::new(self.ctx.project_name().clone(), secrets)?;
-        let addr = SocketAddr::new(Ipv4Addr::LOCALHOST.into(), run_args.port);
+        let addr = SocketAddr::new(
+            run_args.host.unwrap_or_else(|| Ipv4Addr::LOCALHOST.into()),
+            run_args.port,
+        );
 
         trace!("loading project");
         println!(

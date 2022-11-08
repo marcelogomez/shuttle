@@ -2,6 +2,7 @@ use std::{
     ffi::OsStr,
     fs::{canonicalize, create_dir_all},
     io::{self, ErrorKind},
+    net::IpAddr,
     path::PathBuf,
 };
 
@@ -139,6 +140,9 @@ pub struct DeployArgs {
 
 #[derive(Parser, Debug)]
 pub struct RunArgs {
+    /// hostname to start the service on, defaults to localhost (127.0.0.1)
+    #[clap(long)]
+    pub host: Option<IpAddr>,
     /// port to start service on
     #[clap(long, default_value = "8000")]
     pub port: u16,
